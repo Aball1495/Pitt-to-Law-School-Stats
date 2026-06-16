@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitt Pre-Law | Law School Data Guide 2022–2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pitt-blue: #003594;
+    --pitt-gold: #FFB81C;
+    --pitt-dark: #001f5b;
+    --pitt-mid-blue: #1a4b8c;
+    --ink: #1a1a2e;
+    --muted: #5a6378;
+    --rule: #d0d8e8;
+    --bg: #f7f8fc;
+    --white: #ffffff;
+    --positive: #0e7c3a;
+    --positive-bg: #e6f4ec;
+    --negative: #c0392b;
+    --negative-bg: #fdecea;
+    --neutral: #4a5568;
+    --neutral-bg: #edf2f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; min-height: 100vh; }
+
+  .masthead { background: var(--pitt-blue); border-bottom: 4px solid var(--pitt-gold); padding: 28px 40px 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+  .masthead-left { flex: 1; }
+  .masthead-eyebrow { font-family: 'Roboto Mono', monospace; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--pitt-gold); margin-bottom: 6px; }
+  .masthead-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 900; color: var(--white); line-height: 1.1; }
+  .masthead-title span { color: var(--pitt-gold); }
+  .masthead-sub { font-size: 13px; color: #e8d48a; margin-top: 6px; font-weight: 300; }
+  .masthead-right { text-align: right; flex-shrink: 0; }
+  .masthead-badge { display: inline-block; background: var(--pitt-gold); color: var(--pitt-dark); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 12px; padding: 5px 12px; letter-spacing: 0.5px; }
+  .masthead-note { font-size: 11px; color: #e8d48a; margin-top: 6px; }
+
+  .nav-tabs { background: var(--pitt-blue); display: flex; padding: 0 40px; overflow-x: auto; }
+  .tab-btn { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #e8d48a; background: none; border: none; cursor: pointer; padding: 14px 20px 12px; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ffffff; }
+  .tab-btn.active { color: var(--pitt-gold); border-bottom-color: var(--pitt-gold); }
+
+  .section-panel { display: none; padding: 32px 40px 48px; }
+  .section-panel.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--pitt-dark); margin-bottom: 6px; text-align: center; }
+  .section-desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; max-width: 700px; line-height: 1.6; text-align: center; margin-left: auto; margin-right: auto; }
+
+  .stat-strip { display: flex; margin-bottom: 24px; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--white); }
+  .stat-item { flex: 1; padding: 16px 20px; border-right: 1px solid var(--rule); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+  .stat-label { font-family: 'Roboto Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--pitt-dark); }
+  .stat-value.sm { font-size: 17px; }
+  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .controls-bar { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .controls-bar label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+  .search-input { font-family: 'Source Sans 3', sans-serif; font-size: 13px; border: 1.5px solid var(--rule); border-radius: 4px; padding: 6px 12px; width: 220px; background: var(--white); color: var(--ink); outline: none; transition: border-color 0.2s; }
+  .search-input:focus { border-color: var(--pitt-blue); }
+  .limit-select { font-family: 'Source Sans 3', sans-serif; font-size: 13px; border: 1.5px solid var(--rule); border-radius: 4px; padding: 6px 10px; background: var(--white); color: var(--ink); cursor: pointer; outline: none; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .data-table thead tr { background: var(--pitt-dark); color: var(--white); }
+  .data-table thead th { font-family: 'Roboto Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; padding: 10px 14px; text-align: center; white-space: nowrap; cursor: pointer; user-select: none; }
+  .data-table thead th:hover { background: var(--pitt-mid-blue); }
+  .data-table thead th.sort-active { color: var(--pitt-gold); }
+  .data-table tbody tr { border-bottom: 1px solid var(--rule); transition: background 0.1s; }
+  .data-table tbody tr:hover { background: #f0f4fb; }
+  .data-table tbody tr:nth-child(even) { background: #fafbfd; }
+  .data-table tbody tr:nth-child(even):hover { background: #f0f4fb; }
+  .data-table td { padding: 10px 14px; vertical-align: middle; text-align: center; }
+
+  .rank-num { font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 500; color: var(--muted); width: 32px; text-align: center; }
+  .school-name { font-weight: 600; color: var(--pitt-dark); font-size: 13.5px; }
+  .num-cell { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 500; text-align: center; color: var(--ink); }
+  .sort-ind { margin-left: 4px; opacity: 0.5; }
+  .sort-ind.on { opacity: 1; color: var(--pitt-gold); }
+
+  .pct-badge { display: inline-block; font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 10px; white-space: nowrap; }
+  .pct-badge.high { background: var(--positive-bg); color: var(--positive); }
+  .pct-badge.med  { background: #fff3cd; color: #7a5a00; }
+  .pct-badge.low  { background: var(--negative-bg); color: var(--negative); }
+
+  .diff-badge { display: inline-block; font-family: 'Roboto Mono', monospace; font-size: 11.5px; font-weight: 500; padding: 3px 8px; border-radius: 10px; white-space: nowrap; }
+  .diff-pos { background: var(--positive-bg); color: var(--positive); }
+  .diff-neg { background: var(--negative-bg); color: var(--negative); }
+  .diff-neu { background: var(--neutral-bg); color: var(--neutral); }
+
+  .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; justify-content: center; }
+  .chip-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .chip { font-family: 'Source Sans 3', sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border: 1.5px solid var(--rule); border-radius: 20px; padding: 4px 12px; background: var(--white); color: var(--muted); cursor: pointer; transition: all 0.15s; }
+  .chip:hover { border-color: var(--pitt-blue); color: var(--pitt-blue); }
+  .chip.active { background: var(--pitt-blue); border-color: var(--pitt-blue); color: var(--white); }
+  .chip.pos-filter.active { background: var(--positive); border-color: var(--positive); }
+  .chip.neg-filter.active { background: var(--negative); border-color: var(--negative); }
+
+  .rate-legend { display: flex; gap: 20px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-pitt { background: var(--pitt-blue); }
+  .dot-nat  { background: #aab8cc; }
+  .dot-pos  { background: var(--positive); }
+  .dot-neg  { background: var(--negative); }
+
+  .no-results { padding: 32px; text-align: center; color: var(--muted); font-style: italic; }
+  .footnote { margin-top: 20px; font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; line-height: 1.7; }
+  .footnote strong { color: var(--pitt-dark); }
+
+  /* ── TOOLTIP ── */
+  .tip-wrap { position: relative; display: inline-block; }
+  .tip-wrap .school-name { border-bottom: 1px dotted var(--muted); cursor: default; }
+  .tooltip {
+    display: none;
+    position: absolute;
+    left: 0; top: calc(100% + 6px);
+    z-index: 100;
+    background: var(--pitt-dark);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 10px 14px;
+    min-width: 260px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    font-size: 12px;
+    line-height: 1.5;
+    pointer-events: none;
+  }
+  .tip-wrap:hover .tooltip { display: block; }
+  .tooltip-title { font-family: 'Roboto Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pitt-gold); margin-bottom: 8px; }
+  .tip-grid { display: grid; grid-template-columns: 60px 1fr 1fr 1fr; gap: 3px 10px; }
+  .tip-grid .th { font-family: 'Roboto Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #94a8cc; }
+  .tip-grid .yr { font-weight: 600; color: var(--pitt-gold); font-size: 11px; }
+  .tip-grid .val { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--white); }
+  .tip-grid .na { font-family: 'Roboto Mono', monospace; font-size: 11px; color: #5a6378; }
+
+  @media (max-width: 700px) {
+    .masthead { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+    .section-panel { padding: 20px 16px 40px; }
+    .nav-tabs { padding: 0 16px; }
+    .stat-strip { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--rule); }
+    .search-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-left">
+    <div class="masthead-eyebrow">University of Pittsburgh · Pre-Law Advising</div>
+    <div class="masthead-title">Law School <span>Application Data</span></div>
+    <div class="masthead-sub">Where Pitt undergrads applied, were admitted, and enrolled · Three-year trend data (2022–2025)</div>
+  </div>
+  <div class="masthead-right">
+    <div class="masthead-badge">2022–2025 Data Guide</div>
+    <div class="masthead-note">Source: LSAC & ABA First-Year Class Reports</div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('overview', this)">Application Overview</button>
+  <button class="tab-btn" onclick="showTab('rates', this)">Acceptance Rates vs. National</button>
+</div>
+
+<!-- OVERVIEW PANEL -->
+<div id="panel-overview" class="section-panel active">
+  <div class="section-title">Where Pitt Students Applied, Were Admitted &amp; Enrolled</div>
+  <div class="section-desc">All law schools where Pitt undergraduates applied over the 2022–2025 cycle. Click any column header to sort. Hover a school name to see the year-by-year breakdown. Pitt Admit Rate is color-coded: <span class="pct-badge high">≥40%</span> <span class="pct-badge med">20–39%</span> <span class="pct-badge low">&lt;20%</span></div>
+
+  <div class="stat-strip" id="stats-overview"></div>
+
+  <div class="controls-bar">
+    <label>Show</label>
+    <select class="limit-select" id="limit-overview" onchange="renderOverview()">
+      <option value="25">Top 25</option>
+      <option value="50">Top 50</option>
+      <option value="999">All</option>
+    </select>
+    <label>Search</label>
+    <input class="search-input" id="search-overview" placeholder="Filter by school name…" oninput="renderOverview()">
+  </div>
+
+  <table class="data-table" id="table-overview">
+    <thead>
+      <tr>
+        <th onclick="sortOverview('rank')"># <span class="sort-ind on" id="ind-ov-rank">↓</span></th>
+        <th onclick="sortOverview('name')">School <span class="sort-ind" id="ind-ov-name"></span></th>
+        <th onclick="sortOverview('apps')">Applications <span class="sort-ind on" id="ind-ov-apps">↓</span></th>
+        <th onclick="sortOverview('admitted')">Admitted <span class="sort-ind" id="ind-ov-admitted"></span></th>
+        <th onclick="sortOverview('matric')">Matriculated <span class="sort-ind" id="ind-ov-matric"></span></th>
+        <th onclick="sortOverview('pitt_rate')">Pitt Admit Rate <span class="sort-ind" id="ind-ov-pitt_rate"></span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody-overview"></tbody>
+  </table>
+  <div class="footnote">
+    <strong>Applications</strong> = total Pitt undergrads who submitted an application to each school across all three years. &nbsp;
+    <strong>Admitted</strong> = offers of admission received. &nbsp;
+    <strong>Matriculated</strong> = students who enrolled. &nbsp;
+    <strong>Pitt Admit Rate</strong> = admitted ÷ applications from Pitt undergrads over the full three-year period.
+  </div>
+</div>
+
+<!-- RATES PANEL -->
+<div id="panel-rates" class="section-panel">
+  <div class="section-title">Pitt Acceptance Rate vs. National Average</div>
+  <div class="section-desc">Compares how each school admitted Pitt applicants against its overall national acceptance rate (ABA data, 2023–2025 combined). Only schools with ≥15 Pitt applications and available national data are shown.</div>
+
+  <div class="stat-strip" id="stats-rates"></div>
+
+  <div class="rate-legend">
+    <div class="legend-item"><div class="legend-dot dot-pos"></div>Pitt exceeds national</div>
+    <div class="legend-item"><div class="legend-dot dot-neg"></div>National exceeds Pitt</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--neutral)"></div>Within 3% of national</div>
+  </div>
+
+  <div class="filter-chips">
+    <span class="chip-label">Filter:</span>
+    <button class="chip active" id="chip-all" onclick="setRateFilter('all')">All Schools</button>
+    <button class="chip pos-filter" id="chip-pos" onclick="setRateFilter('pos')">Pitt Above Average</button>
+    <button class="chip neg-filter" id="chip-neg" onclick="setRateFilter('neg')">Pitt Below Average</button>
+  </div>
+
+  <div class="controls-bar">
+    <label>Show</label>
+    <select class="limit-select" id="limit-rates" onchange="renderRates()">
+      <option value="25">Top 25 by Apps</option>
+      <option value="50">Top 50 by Apps</option>
+      <option value="999">All</option>
+    </select>
+    <label>Search</label>
+    <input class="search-input" id="search-rates" placeholder="Filter by school name…" oninput="renderRates()">
+  </div>
+
+  <table class="data-table" id="table-rates">
+    <thead>
+      <tr>
+        <th onclick="sortRates('rank')"># <span class="sort-ind on" id="ind-rt-rank">↓</span></th>
+        <th onclick="sortRates('name')">School <span class="sort-ind" id="ind-rt-name"></span></th>
+        <th onclick="sortRates('apps')">Pitt Apps <span class="sort-ind" id="ind-rt-apps"></span></th>
+        <th onclick="sortRates('pitt_rate')">Pitt Rate <span class="sort-ind" id="ind-rt-pitt_rate"></span></th>
+        <th onclick="sortRates('nat_rate')">National Rate <span class="sort-ind" id="ind-rt-nat_rate"></span></th>
+        <th onclick="sortRates('diff')">Difference <span class="sort-ind" id="ind-rt-diff"></span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody-rates"></tbody>
+  </table>
+  <div class="footnote">
+    <strong>Pitt Rate</strong> = Pitt applicants admitted ÷ Pitt applicants (three-year total). &nbsp;
+    <strong>National Rate</strong> = all applicants admitted nationally (ABA First-Year Class data, 2023–2025 combined). &nbsp;
+    <strong>Difference</strong> = Pitt rate minus national rate. Positive values mean Pitt applicants were admitted at above-average rates.
+  </div>
+</div>
+
+<script>
+const RAW = [{"school":"University of Pittsburgh School of Law","display_name":"Pitt Law","pitt_apps":363,"pitt_admitted":218,"pitt_matric":86,"pitt_rate":60.1,"nat_rate":40.9,"years":{"22-23":{"apps":118,"admitted":72,"matric":30},"23-24":{"apps":95,"admitted":64,"matric":28},"24-25":{"apps":150,"admitted":82,"matric":28}}},{"school":"Duquesne University Thomas R. Kline School of Law","display_name":"Duquesne (Kline)","pitt_apps":250,"pitt_admitted":164,"pitt_matric":56,"pitt_rate":65.6,"nat_rate":50.5,"years":{"22-23":{"apps":76,"admitted":50,"matric":17},"23-24":{"apps":72,"admitted":49,"matric":18},"24-25":{"apps":102,"admitted":65,"matric":21}}},{"school":"The George Washington University Law School","display_name":"George Washington","pitt_apps":158,"pitt_admitted":52,"pitt_matric":15,"pitt_rate":32.9,"nat_rate":29.4,"years":{"22-23":{"apps":47,"admitted":12,"matric":4},"23-24":{"apps":41,"admitted":17,"matric":5},"24-25":{"apps":70,"admitted":23,"matric":6}}},{"school":"Temple University--James E. Beasley School of Law","display_name":"Temple (Beasley)","pitt_apps":150,"pitt_admitted":59,"pitt_matric":21,"pitt_rate":39.3,"nat_rate":32.0,"years":{"22-23":{"apps":43,"admitted":21,"matric":5},"23-24":{"apps":41,"admitted":14,"matric":5},"24-25":{"apps":66,"admitted":24,"matric":11}}},{"school":"Georgetown University Law Center","display_name":"Georgetown","pitt_apps":147,"pitt_admitted":22,"pitt_matric":9,"pitt_rate":15.0,"nat_rate":18.3,"years":{"22-23":{"apps":46,"admitted":4,"matric":2},"23-24":{"apps":39,"admitted":12,"matric":4},"24-25":{"apps":62,"admitted":6,"matric":3}}},{"school":"American University Washington College of Law","display_name":"American University","pitt_apps":140,"pitt_admitted":55,"pitt_matric":8,"pitt_rate":39.3,"nat_rate":36.1,"years":{"22-23":{"apps":42,"admitted":17,"matric":3},"23-24":{"apps":37,"admitted":13,"matric":2},"24-25":{"apps":61,"admitted":25,"matric":3}}},{"school":"Drexel University Thomas R. Kline School of Law","display_name":"Drexel (Kline)","pitt_apps":127,"pitt_admitted":60,"pitt_matric":22,"pitt_rate":47.2,"nat_rate":33.3,"years":{"22-23":{"apps":35,"admitted":18,"matric":5},"23-24":{"apps":27,"admitted":13,"matric":5},"24-25":{"apps":65,"admitted":29,"matric":12}}},{"school":"University of Pennsylvania Carey Law School","display_name":"Penn (Carey)","pitt_apps":114,"pitt_admitted":28,"pitt_matric":19,"pitt_rate":24.6,"nat_rate":9.2,"years":{"22-23":{"apps":35,"admitted":10,"matric":6},"23-24":{"apps":33,"admitted":12,"matric":9},"24-25":{"apps":46,"admitted":6,"matric":4}}},{"school":"Villanova University Charles Widger School of Law","display_name":"Villanova","pitt_apps":114,"pitt_admitted":29,"pitt_matric":6,"pitt_rate":25.4,"nat_rate":23.5,"years":{"22-23":{"apps":37,"admitted":8,"matric":1},"23-24":{"apps":32,"admitted":5,"matric":2},"24-25":{"apps":45,"admitted":16,"matric":3}}},{"school":"Boston University School of Law","display_name":"Boston University","pitt_apps":113,"pitt_admitted":13,"pitt_matric":1,"pitt_rate":11.5,"nat_rate":16.5,"years":{"22-23":{"apps":42,"admitted":5,"matric":0},"23-24":{"apps":29,"admitted":4,"matric":0},"24-25":{"apps":42,"admitted":4,"matric":1}}},{"school":"Boston College Law School","display_name":"Boston College","pitt_apps":111,"pitt_admitted":8,"pitt_matric":1,"pitt_rate":7.2,"nat_rate":11.4,"years":{"22-23":{"apps":38,"admitted":4,"matric":1},"23-24":{"apps":31,"admitted":3,"matric":0},"24-25":{"apps":42,"admitted":1,"matric":0}}},{"school":"University of Maryland Francis King Carey School of Law","display_name":"Maryland (Carey)","pitt_apps":98,"pitt_admitted":28,"pitt_matric":9,"pitt_rate":28.6,"nat_rate":28.9,"years":{"22-23":{"apps":30,"admitted":8,"matric":2},"23-24":{"apps":22,"admitted":5,"matric":1},"24-25":{"apps":46,"admitted":15,"matric":6}}},{"school":"Fordham University School of Law","display_name":"Fordham","pitt_apps":96,"pitt_admitted":18,"pitt_matric":4,"pitt_rate":18.8,"nat_rate":19.5,"years":{"22-23":{"apps":28,"admitted":6,"matric":2},"23-24":{"apps":30,"admitted":5,"matric":1},"24-25":{"apps":38,"admitted":7,"matric":1}}},{"school":"New York University School of Law","display_name":"NYU","pitt_apps":95,"pitt_admitted":15,"pitt_matric":3,"pitt_rate":15.8,"nat_rate":15.4,"years":{"22-23":{"apps":24,"admitted":3,"matric":0},"23-24":{"apps":27,"admitted":6,"matric":3},"24-25":{"apps":44,"admitted":6,"matric":0}}},{"school":"Northeastern University School of Law","display_name":"Northeastern","pitt_apps":93,"pitt_admitted":29,"pitt_matric":4,"pitt_rate":31.2,"nat_rate":31.5,"years":{"22-23":{"apps":30,"admitted":10,"matric":1},"23-24":{"apps":19,"admitted":7,"matric":0},"24-25":{"apps":44,"admitted":12,"matric":3}}},{"school":"The University of Michigan Law School","display_name":"Michigan","pitt_apps":86,"pitt_admitted":2,"pitt_matric":2,"pitt_rate":2.3,"nat_rate":10.7,"years":{"22-23":{"apps":27,"admitted":1,"matric":1},"23-24":{"apps":25,"admitted":1,"matric":1},"24-25":{"apps":34,"admitted":0,"matric":0}}},{"school":"Rutgers Law School","display_name":"Rutgers","pitt_apps":72,"pitt_admitted":37,"pitt_matric":9,"pitt_rate":51.4,"nat_rate":36.6,"years":{"22-23":{"apps":23,"admitted":11,"matric":2},"23-24":{"apps":19,"admitted":10,"matric":5},"24-25":{"apps":30,"admitted":16,"matric":2}}},{"school":"Penn State Dickinson Law","display_name":"Penn State Dickinson","pitt_apps":72,"pitt_admitted":34,"pitt_matric":8,"pitt_rate":47.2,"nat_rate":40.0,"years":{"22-23":{"apps":17,"admitted":8,"matric":2},"23-24":{"apps":18,"admitted":5,"matric":2},"24-25":{"apps":37,"admitted":21,"matric":4}}},{"school":"Northwestern Pritzker School of Law","display_name":"Northwestern (Pritzker)","pitt_apps":70,"pitt_admitted":9,"pitt_matric":0,"pitt_rate":12.9,"nat_rate":14.2,"years":{"22-23":{"apps":20,"admitted":3,"matric":0},"23-24":{"apps":15,"admitted":3,"matric":0},"24-25":{"apps":35,"admitted":3,"matric":0}}},{"school":"University of Virginia School of Law","display_name":"Virginia","pitt_apps":68,"pitt_admitted":14,"pitt_matric":8,"pitt_rate":20.6,"nat_rate":11.7,"years":{"22-23":{"apps":16,"admitted":6,"matric":2},"23-24":{"apps":23,"admitted":4,"matric":2},"24-25":{"apps":29,"admitted":4,"matric":4}}},{"school":"Columbia University School of Law","display_name":"Columbia","pitt_apps":67,"pitt_admitted":5,"pitt_matric":1,"pitt_rate":7.5,"nat_rate":11.9,"years":{"22-23":{"apps":21,"admitted":1,"matric":0},"23-24":{"apps":20,"admitted":2,"matric":0},"24-25":{"apps":26,"admitted":2,"matric":1}}},{"school":"Harvard Law School","display_name":"Harvard","pitt_apps":63,"pitt_admitted":4,"pitt_matric":2,"pitt_rate":6.3,"nat_rate":9.8,"years":{"22-23":{"apps":26,"admitted":1,"matric":0},"23-24":{"apps":15,"admitted":2,"matric":1},"24-25":{"apps":22,"admitted":1,"matric":1}}},{"school":"Duke University School of Law","display_name":"Duke","pitt_apps":62,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":6.5,"nat_rate":12.4,"years":{"22-23":{"apps":21,"admitted":1,"matric":0},"23-24":{"apps":24,"admitted":2,"matric":0},"24-25":{"apps":17,"admitted":1,"matric":0}}},{"school":"Brooklyn Law School","display_name":"Brooklyn Law","pitt_apps":61,"pitt_admitted":38,"pitt_matric":8,"pitt_rate":62.3,"nat_rate":49.1,"years":{"22-23":{"apps":19,"admitted":13,"matric":3},"23-24":{"apps":19,"admitted":11,"matric":1},"24-25":{"apps":23,"admitted":14,"matric":4}}},{"school":"Vanderbilt Law School","display_name":"Vanderbilt","pitt_apps":59,"pitt_admitted":11,"pitt_matric":1,"pitt_rate":18.6,"nat_rate":16.0,"years":{"22-23":{"apps":17,"admitted":3,"matric":0},"23-24":{"apps":18,"admitted":6,"matric":1},"24-25":{"apps":24,"admitted":2,"matric":0}}},{"school":"Loyola University Chicago School of Law","display_name":"Loyola Chicago","pitt_apps":53,"pitt_admitted":27,"pitt_matric":3,"pitt_rate":50.9,"nat_rate":37.4,"years":{"22-23":{"apps":19,"admitted":10,"matric":0},"23-24":{"apps":13,"admitted":9,"matric":2},"24-25":{"apps":21,"admitted":8,"matric":1}}},{"school":"The Ohio State University Moritz College of Law","display_name":"Ohio State (Moritz)","pitt_apps":52,"pitt_admitted":14,"pitt_matric":2,"pitt_rate":26.9,"nat_rate":28.7,"years":{"22-23":{"apps":15,"admitted":4,"matric":1},"23-24":{"apps":11,"admitted":3,"matric":0},"24-25":{"apps":26,"admitted":7,"matric":1}}},{"school":"University of California at Los Angeles (UCLA) School of Law","display_name":"UCLA","pitt_apps":50,"pitt_admitted":9,"pitt_matric":2,"pitt_rate":18.0,"nat_rate":14.7,"years":{"22-23":{"apps":9,"admitted":4,"matric":1},"23-24":{"apps":20,"admitted":2,"matric":0},"24-25":{"apps":21,"admitted":3,"matric":1}}},{"school":"The University of Chicago Law School","display_name":"Chicago","pitt_apps":47,"pitt_admitted":5,"pitt_matric":2,"pitt_rate":10.6,"nat_rate":11.6,"years":{"22-23":{"apps":18,"admitted":3,"matric":1},"23-24":{"apps":9,"admitted":1,"matric":0},"24-25":{"apps":20,"admitted":1,"matric":1}}},{"school":"Washington University School of Law","display_name":"Washington University (WashU)","pitt_apps":46,"pitt_admitted":13,"pitt_matric":2,"pitt_rate":28.3,"nat_rate":30.2,"years":{"22-23":{"apps":18,"admitted":3,"matric":1},"23-24":{"apps":13,"admitted":6,"matric":1},"24-25":{"apps":15,"admitted":4,"matric":0}}},{"school":"Case Western Reserve University School of Law","display_name":"Case Western Reserve","pitt_apps":46,"pitt_admitted":24,"pitt_matric":10,"pitt_rate":52.2,"nat_rate":37.3,"years":{"22-23":{"apps":14,"admitted":7,"matric":5},"23-24":{"apps":8,"admitted":5,"matric":4},"24-25":{"apps":24,"admitted":12,"matric":1}}},{"school":"Benjamin N. Cardozo School of Law, Yeshiva University","display_name":"Cardozo (Yeshiva)","pitt_apps":46,"pitt_admitted":14,"pitt_matric":5,"pitt_rate":30.4,"nat_rate":34.5,"years":{"22-23":{"apps":21,"admitted":8,"matric":2},"23-24":{"apps":8,"admitted":2,"matric":0},"24-25":{"apps":17,"admitted":4,"matric":3}}},{"school":"Cornell Law School","display_name":"Cornell","pitt_apps":45,"pitt_admitted":9,"pitt_matric":2,"pitt_rate":20.0,"nat_rate":20.0,"years":{"22-23":{"apps":13,"admitted":3,"matric":0},"23-24":{"apps":13,"admitted":3,"matric":0},"24-25":{"apps":19,"admitted":3,"matric":2}}},{"school":"New England Law | Boston","display_name":"New England Law Boston","pitt_apps":44,"pitt_admitted":34,"pitt_matric":5,"pitt_rate":77.3,"nat_rate":69.9,"years":{"22-23":{"apps":21,"admitted":18,"matric":1},"23-24":{"apps":10,"admitted":8,"matric":4},"24-25":{"apps":13,"admitted":8,"matric":0}}},{"school":"George Mason University, Antonin Scalia Law School","display_name":"George Mason (Scalia)","pitt_apps":43,"pitt_admitted":7,"pitt_matric":1,"pitt_rate":16.3,"nat_rate":14.9,"years":{"22-23":{"apps":10,"admitted":1,"matric":0},"23-24":{"apps":14,"admitted":2,"matric":1},"24-25":{"apps":19,"admitted":4,"matric":0}}},{"school":"The University of Texas School of Law","display_name":"Texas","pitt_apps":43,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":9.3,"nat_rate":14.8,"years":{"22-23":{"apps":14,"admitted":1,"matric":0},"23-24":{"apps":17,"admitted":2,"matric":0},"24-25":{"apps":12,"admitted":1,"matric":0}}},{"school":"University of Miami School of Law","display_name":"Miami","pitt_apps":43,"pitt_admitted":10,"pitt_matric":1,"pitt_rate":23.3,"nat_rate":28.8,"years":{"22-23":{"apps":15,"admitted":3,"matric":0},"23-24":{"apps":12,"admitted":4,"matric":1},"24-25":{"apps":16,"admitted":3,"matric":0}}},{"school":"University of North Carolina School of Law","display_name":"North Carolina","pitt_apps":41,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":4.9,"nat_rate":14.0,"years":{"22-23":{"apps":13,"admitted":2,"matric":0},"23-24":{"apps":11,"admitted":0,"matric":0},"24-25":{"apps":17,"admitted":0,"matric":0}}},{"school":"University of Richmond School of Law","display_name":"Richmond","pitt_apps":41,"pitt_admitted":14,"pitt_matric":1,"pitt_rate":34.1,"nat_rate":41.2,"years":{"22-23":{"apps":13,"admitted":5,"matric":1},"23-24":{"apps":12,"admitted":4,"matric":0},"24-25":{"apps":16,"admitted":5,"matric":0}}},{"school":"St. John's University School of Law","display_name":"St. John's","pitt_apps":40,"pitt_admitted":11,"pitt_matric":0,"pitt_rate":27.5,"nat_rate":29.9,"years":{"22-23":{"apps":8,"admitted":4,"matric":0},"23-24":{"apps":14,"admitted":3,"matric":0},"24-25":{"apps":18,"admitted":4,"matric":0}}},{"school":"Syracuse University College of Law","display_name":"Syracuse","pitt_apps":39,"pitt_admitted":22,"pitt_matric":5,"pitt_rate":56.4,"nat_rate":38.4,"years":{"22-23":{"apps":8,"admitted":4,"matric":0},"23-24":{"apps":13,"admitted":8,"matric":3},"24-25":{"apps":18,"admitted":10,"matric":2}}},{"school":"Widener University Commonwealth Law School","display_name":"Widener University Commonwealth","pitt_apps":38,"pitt_admitted":33,"pitt_matric":9,"pitt_rate":86.8,"nat_rate":63.7,"years":{"22-23":{"apps":14,"admitted":12,"matric":3},"23-24":{"apps":11,"admitted":10,"matric":4},"24-25":{"apps":13,"admitted":11,"matric":2}}},{"school":"Seton Hall University School of Law","display_name":"Seton Hall","pitt_apps":37,"pitt_admitted":19,"pitt_matric":3,"pitt_rate":51.4,"nat_rate":40.2,"years":{"22-23":{"apps":9,"admitted":7,"matric":1},"23-24":{"apps":8,"admitted":7,"matric":0},"24-25":{"apps":20,"admitted":5,"matric":2}}},{"school":"Suffolk University Law School","display_name":"Suffolk","pitt_apps":37,"pitt_admitted":30,"pitt_matric":4,"pitt_rate":81.1,"nat_rate":63.7,"years":{"22-23":{"apps":13,"admitted":12,"matric":2},"23-24":{"apps":7,"admitted":5,"matric":1},"24-25":{"apps":17,"admitted":13,"matric":1}}},{"school":"William & Mary Law School","display_name":"William & Mary","pitt_apps":36,"pitt_admitted":7,"pitt_matric":2,"pitt_rate":19.4,"nat_rate":26.7,"years":{"22-23":{"apps":15,"admitted":2,"matric":0},"23-24":{"apps":6,"admitted":1,"matric":0},"24-25":{"apps":15,"admitted":4,"matric":2}}},{"school":"University of Colorado Law School","display_name":"Colorado","pitt_apps":36,"pitt_admitted":14,"pitt_matric":2,"pitt_rate":38.9,"nat_rate":32.4,"years":{"22-23":{"apps":6,"admitted":2,"matric":1},"23-24":{"apps":16,"admitted":8,"matric":1},"24-25":{"apps":14,"admitted":4,"matric":0}}},{"school":"Widener University Delaware Law School","display_name":"Widener University Delaware","pitt_apps":35,"pitt_admitted":31,"pitt_matric":7,"pitt_rate":88.6,"nat_rate":64.3,"years":{"22-23":{"apps":7,"admitted":7,"matric":2},"23-24":{"apps":12,"admitted":10,"matric":2},"24-25":{"apps":16,"admitted":14,"matric":3}}},{"school":"University of Southern California, Gould School of Law","display_name":"USC (Gould)","pitt_apps":34,"pitt_admitted":5,"pitt_matric":3,"pitt_rate":14.7,"nat_rate":12.0,"years":{"22-23":{"apps":6,"admitted":0,"matric":0},"23-24":{"apps":15,"admitted":1,"matric":0},"24-25":{"apps":13,"admitted":4,"matric":3}}},{"school":"Emory University School of Law","display_name":"Emory","pitt_apps":33,"pitt_admitted":16,"pitt_matric":2,"pitt_rate":48.5,"nat_rate":39.8,"years":{"22-23":{"apps":14,"admitted":8,"matric":1},"23-24":{"apps":9,"admitted":5,"matric":0},"24-25":{"apps":10,"admitted":3,"matric":1}}},{"school":"The Catholic University of America, Columbus School of Law","display_name":"Catholic University","pitt_apps":32,"pitt_admitted":8,"pitt_matric":3,"pitt_rate":25.0,"nat_rate":32.8,"years":{"22-23":{"apps":10,"admitted":2,"matric":0},"23-24":{"apps":8,"admitted":4,"matric":2},"24-25":{"apps":14,"admitted":2,"matric":1}}},{"school":"New York Law School","display_name":"New York","pitt_apps":32,"pitt_admitted":19,"pitt_matric":1,"pitt_rate":59.4,"nat_rate":47.8,"years":{"22-23":{"apps":10,"admitted":6,"matric":0},"23-24":{"apps":10,"admitted":7,"matric":0},"24-25":{"apps":12,"admitted":6,"matric":1}}},{"school":"Yale Law School","display_name":"Yale","pitt_apps":32,"pitt_admitted":2,"pitt_matric":2,"pitt_rate":6.2,"nat_rate":4.9,"years":{"22-23":{"apps":11,"admitted":2,"matric":2},"23-24":{"apps":7,"admitted":0,"matric":0},"24-25":{"apps":14,"admitted":0,"matric":0}}},{"school":"The Pennsylvania State University, Penn State Law","display_name":"Penn State Law","pitt_apps":32,"pitt_admitted":15,"pitt_matric":2,"pitt_rate":46.9,"nat_rate":43.0,"years":{"22-23":{"apps":21,"admitted":10,"matric":2},"23-24":{"apps":11,"admitted":5,"matric":0},"24-25":null}},{"school":"University of Georgia School of Law","display_name":"Georgia","pitt_apps":31,"pitt_admitted":7,"pitt_matric":2,"pitt_rate":22.6,"nat_rate":13.8,"years":{"22-23":{"apps":7,"admitted":2,"matric":1},"23-24":{"apps":11,"admitted":4,"matric":1},"24-25":{"apps":13,"admitted":1,"matric":0}}},{"school":"Wake Forest University School of Law","display_name":"Wake Forest","pitt_apps":30,"pitt_admitted":7,"pitt_matric":3,"pitt_rate":23.3,"nat_rate":27.3,"years":{"22-23":{"apps":6,"admitted":2,"matric":0},"23-24":{"apps":11,"admitted":2,"matric":1},"24-25":{"apps":13,"admitted":3,"matric":2}}},{"school":"University of California, Berkeley, School of Law","display_name":"UC Berkeley","pitt_apps":29,"pitt_admitted":3,"pitt_matric":2,"pitt_rate":10.3,"nat_rate":15.7,"years":{"22-23":{"apps":7,"admitted":1,"matric":1},"23-24":{"apps":15,"admitted":2,"matric":1},"24-25":{"apps":7,"admitted":0,"matric":0}}},{"school":"Stanford University Law School","display_name":"Stanford","pitt_apps":29,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":3.4,"nat_rate":7.3,"years":{"22-23":{"apps":14,"admitted":1,"matric":0},"23-24":{"apps":4,"admitted":0,"matric":0},"24-25":{"apps":11,"admitted":0,"matric":0}}},{"school":"University of South Carolina Joseph F. Rice School of Law","display_name":"South Carolina","pitt_apps":28,"pitt_admitted":6,"pitt_matric":1,"pitt_rate":21.4,"nat_rate":31.0,"years":{"22-23":{"apps":7,"admitted":2,"matric":1},"23-24":{"apps":9,"admitted":3,"matric":0},"24-25":{"apps":12,"admitted":1,"matric":0}}},{"school":"Charleston School of Law","display_name":"Charleston","pitt_apps":28,"pitt_admitted":15,"pitt_matric":5,"pitt_rate":53.6,"nat_rate":51.0,"years":{"22-23":{"apps":6,"admitted":4,"matric":2},"23-24":{"apps":8,"admitted":3,"matric":1},"24-25":{"apps":14,"admitted":8,"matric":2}}},{"school":"University of Minnesota Law School","display_name":"Minnesota","pitt_apps":27,"pitt_admitted":9,"pitt_matric":1,"pitt_rate":33.3,"nat_rate":32.7,"years":{"22-23":{"apps":5,"admitted":2,"matric":0},"23-24":{"apps":9,"admitted":3,"matric":0},"24-25":{"apps":13,"admitted":4,"matric":1}}},{"school":"University of Florida, Fredric G. Levin College of Law","display_name":"Florida (Levin)","pitt_apps":27,"pitt_admitted":5,"pitt_matric":2,"pitt_rate":18.5,"nat_rate":17.0,"years":{"22-23":{"apps":8,"admitted":3,"matric":2},"23-24":{"apps":11,"admitted":2,"matric":0},"24-25":{"apps":8,"admitted":0,"matric":0}}},{"school":"Arizona State University--Sandra Day O'Connor College of Law","display_name":"Arizona State","pitt_apps":26,"pitt_admitted":3,"pitt_matric":1,"pitt_rate":11.5,"nat_rate":21.0,"years":{"22-23":{"apps":7,"admitted":1,"matric":0},"23-24":{"apps":11,"admitted":1,"matric":0},"24-25":{"apps":8,"admitted":1,"matric":1}}},{"school":"UConn School of Law","display_name":"UConn","pitt_apps":26,"pitt_admitted":6,"pitt_matric":1,"pitt_rate":23.1,"nat_rate":25.5,"years":{"22-23":{"apps":8,"admitted":2,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":16,"admitted":3,"matric":1}}},{"school":"Notre Dame Law School","display_name":"Notre Dame","pitt_apps":26,"pitt_admitted":7,"pitt_matric":3,"pitt_rate":26.9,"nat_rate":20.6,"years":{"22-23":{"apps":10,"admitted":3,"matric":1},"23-24":{"apps":7,"admitted":2,"matric":2},"24-25":{"apps":9,"admitted":2,"matric":0}}},{"school":"Texas A&M University School of Law","display_name":"Texas A&M","pitt_apps":25,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":8.0,"nat_rate":13.3,"years":{"22-23":{"apps":11,"admitted":0,"matric":0},"23-24":{"apps":3,"admitted":1,"matric":0},"24-25":{"apps":11,"admitted":1,"matric":0}}},{"school":"Tulane University Law School","display_name":"Tulane","pitt_apps":25,"pitt_admitted":10,"pitt_matric":1,"pitt_rate":40.0,"nat_rate":46.3,"years":{"22-23":{"apps":8,"admitted":4,"matric":0},"23-24":{"apps":7,"admitted":4,"matric":0},"24-25":{"apps":10,"admitted":2,"matric":1}}},{"school":"University of Washington School of Law","display_name":"Washington","pitt_apps":24,"pitt_admitted":9,"pitt_matric":0,"pitt_rate":37.5,"nat_rate":30.2,"years":{"22-23":{"apps":8,"admitted":3,"matric":0},"23-24":{"apps":10,"admitted":5,"matric":0},"24-25":{"apps":6,"admitted":1,"matric":0}}},{"school":"West Virginia University College of Law","display_name":"West Virginia","pitt_apps":22,"pitt_admitted":6,"pitt_matric":1,"pitt_rate":27.3,"nat_rate":43.0,"years":{"22-23":{"apps":8,"admitted":3,"matric":0},"23-24":{"apps":5,"admitted":1,"matric":0},"24-25":{"apps":9,"admitted":2,"matric":1}}},{"school":"University at Buffalo School of Law, The State University of New York","display_name":"Buffalo (SUNY)","pitt_apps":22,"pitt_admitted":14,"pitt_matric":4,"pitt_rate":63.6,"nat_rate":42.6,"years":{"22-23":{"apps":6,"admitted":4,"matric":1},"23-24":{"apps":10,"admitted":6,"matric":1},"24-25":{"apps":6,"admitted":4,"matric":2}}},{"school":"Albany Law School","display_name":"Albany","pitt_apps":22,"pitt_admitted":16,"pitt_matric":1,"pitt_rate":72.7,"nat_rate":44.6,"years":{"22-23":{"apps":4,"admitted":3,"matric":0},"23-24":{"apps":10,"admitted":9,"matric":1},"24-25":{"apps":8,"admitted":4,"matric":0}}},{"school":"Pepperdine University Rick J. Caruso School of Law","display_name":"Pepperdine","pitt_apps":21,"pitt_admitted":8,"pitt_matric":0,"pitt_rate":38.1,"nat_rate":26.5,"years":{"22-23":{"apps":9,"admitted":3,"matric":0},"23-24":{"apps":8,"admitted":4,"matric":0},"24-25":{"apps":4,"admitted":1,"matric":0}}},{"school":"University of New Hampshire Franklin Pierce School of Law","display_name":"New Hampshire Franklin Pierce","pitt_apps":20,"pitt_admitted":15,"pitt_matric":2,"pitt_rate":75.0,"nat_rate":56.0,"years":{"22-23":{"apps":5,"admitted":4,"matric":0},"23-24":{"apps":9,"admitted":6,"matric":1},"24-25":{"apps":6,"admitted":5,"matric":1}}},{"school":"City University of New York School of Law","display_name":"CUNY","pitt_apps":20,"pitt_admitted":13,"pitt_matric":2,"pitt_rate":65.0,"nat_rate":35.3,"years":{"22-23":{"apps":5,"admitted":1,"matric":0},"23-24":{"apps":6,"admitted":4,"matric":1},"24-25":{"apps":9,"admitted":8,"matric":1}}},{"school":"University of Baltimore School of Law","display_name":"Baltimore","pitt_apps":20,"pitt_admitted":14,"pitt_matric":5,"pitt_rate":70.0,"nat_rate":52.3,"years":{"22-23":{"apps":7,"admitted":5,"matric":2},"23-24":{"apps":5,"admitted":4,"matric":1},"24-25":{"apps":8,"admitted":5,"matric":2}}},{"school":"University of Wisconsin Law School","display_name":"Wisconsin","pitt_apps":20,"pitt_admitted":6,"pitt_matric":2,"pitt_rate":30.0,"nat_rate":26.6,"years":{"22-23":{"apps":6,"admitted":2,"matric":1},"23-24":{"apps":3,"admitted":1,"matric":0},"24-25":{"apps":11,"admitted":3,"matric":1}}},{"school":"Pace University--Elisabeth Haub School of Law","display_name":"Pace","pitt_apps":20,"pitt_admitted":13,"pitt_matric":2,"pitt_rate":65.0,"nat_rate":49.4,"years":{"22-23":{"apps":6,"admitted":4,"matric":1},"23-24":{"apps":6,"admitted":5,"matric":0},"24-25":{"apps":8,"admitted":4,"matric":1}}},{"school":"Chicago-Kent College of Law, Illinois Institute of Technology","display_name":"Chicago-Kent (IIT)","pitt_apps":19,"pitt_admitted":14,"pitt_matric":2,"pitt_rate":73.7,"nat_rate":45.5,"years":{"22-23":{"apps":10,"admitted":9,"matric":2},"23-24":{"apps":4,"admitted":3,"matric":0},"24-25":{"apps":5,"admitted":2,"matric":0}}},{"school":"University of Houston Law Center","display_name":"Houston","pitt_apps":19,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":15.8,"nat_rate":27.8,"years":{"22-23":{"apps":9,"admitted":3,"matric":0},"23-24":{"apps":4,"admitted":0,"matric":0},"24-25":{"apps":6,"admitted":0,"matric":0}}},{"school":"Washington and Lee University School of Law","display_name":"Washington & Lee","pitt_apps":18,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":22.2,"nat_rate":28.2,"years":{"22-23":{"apps":9,"admitted":2,"matric":0},"23-24":{"apps":4,"admitted":1,"matric":0},"24-25":{"apps":5,"admitted":1,"matric":0}}},{"school":"University of San Diego School of Law","display_name":"San Diego","pitt_apps":18,"pitt_admitted":9,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":30.8,"years":{"22-23":{"apps":7,"admitted":4,"matric":0},"23-24":{"apps":4,"admitted":4,"matric":0},"24-25":{"apps":7,"admitted":1,"matric":0}}},{"school":"University of Denver Sturm College of Law","display_name":"Denver","pitt_apps":18,"pitt_admitted":6,"pitt_matric":1,"pitt_rate":33.3,"nat_rate":48.0,"years":{"22-23":{"apps":5,"admitted":1,"matric":0},"23-24":{"apps":8,"admitted":4,"matric":1},"24-25":{"apps":5,"admitted":1,"matric":0}}},{"school":"University of California, Davis School of Law (King Hall)","display_name":"UC Davis (King Hall)","pitt_apps":18,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":11.1,"nat_rate":27.1,"years":{"22-23":{"apps":3,"admitted":0,"matric":0},"23-24":{"apps":6,"admitted":1,"matric":0},"24-25":{"apps":9,"admitted":1,"matric":0}}},{"school":"UC Law San Francisco (formerly Hastings)","display_name":"UC Law SF","pitt_apps":18,"pitt_admitted":2,"pitt_matric":2,"pitt_rate":11.1,"nat_rate":31.6,"years":{"22-23":{"apps":7,"admitted":1,"matric":1},"23-24":{"apps":5,"admitted":1,"matric":1},"24-25":{"apps":6,"admitted":0,"matric":0}}},{"school":"University of Illinois Chicago School of Law","display_name":"Illinois-Chicago","pitt_apps":17,"pitt_admitted":13,"pitt_matric":3,"pitt_rate":76.5,"nat_rate":61.0,"years":{"22-23":{"apps":6,"admitted":4,"matric":0},"23-24":{"apps":6,"admitted":5,"matric":2},"24-25":{"apps":5,"admitted":4,"matric":1}}},{"school":"Quinnipiac University School of Law","display_name":"Quinnipiac University","pitt_apps":17,"pitt_admitted":14,"pitt_matric":3,"pitt_rate":82.4,"nat_rate":52.9,"years":{"22-23":{"apps":3,"admitted":3,"matric":1},"23-24":{"apps":6,"admitted":6,"matric":0},"24-25":{"apps":8,"admitted":5,"matric":2}}},{"school":"Howard University School of Law","display_name":"Howard University","pitt_apps":16,"pitt_admitted":7,"pitt_matric":3,"pitt_rate":43.8,"nat_rate":29.4,"years":{"22-23":{"apps":4,"admitted":1,"matric":1},"23-24":{"apps":5,"admitted":2,"matric":1},"24-25":{"apps":7,"admitted":4,"matric":1}}},{"school":"DePaul University College of Law","display_name":"DePaul","pitt_apps":16,"pitt_admitted":9,"pitt_matric":2,"pitt_rate":56.2,"nat_rate":40.4,"years":{"22-23":{"apps":7,"admitted":4,"matric":1},"23-24":{"apps":2,"admitted":2,"matric":1},"24-25":{"apps":7,"admitted":3,"matric":0}}},{"school":"University of Massachusetts School of Law--Dartmouth","display_name":"UMass Dartmouth","pitt_apps":16,"pitt_admitted":13,"pitt_matric":1,"pitt_rate":81.2,"nat_rate":59.2,"years":{"22-23":{"apps":6,"admitted":6,"matric":1},"23-24":{"apps":3,"admitted":3,"matric":0},"24-25":{"apps":7,"admitted":4,"matric":0}}},{"school":"Baylor University School of Law","display_name":"Baylor","pitt_apps":16,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":12.5,"nat_rate":21.7,"years":{"22-23":{"apps":6,"admitted":1,"matric":0},"23-24":{"apps":6,"admitted":1,"matric":0},"24-25":{"apps":4,"admitted":0,"matric":0}}},{"school":"The University of Akron School of Law","display_name":"Akron","pitt_apps":16,"pitt_admitted":11,"pitt_matric":0,"pitt_rate":68.8,"nat_rate":60.3,"years":{"22-23":{"apps":4,"admitted":4,"matric":0},"23-24":{"apps":5,"admitted":3,"matric":0},"24-25":{"apps":7,"admitted":4,"matric":0}}},{"school":"Michigan State University College of Law","display_name":"Michigan State University","pitt_apps":16,"pitt_admitted":5,"pitt_matric":1,"pitt_rate":31.2,"nat_rate":32.3,"years":{"22-23":{"apps":3,"admitted":2,"matric":0},"23-24":{"apps":6,"admitted":2,"matric":1},"24-25":{"apps":7,"admitted":1,"matric":0}}},{"school":"Indiana University Maurer School of Law--Bloomington","display_name":"Indiana-Bloomington (Maurer)","pitt_apps":16,"pitt_admitted":7,"pitt_matric":1,"pitt_rate":43.8,"nat_rate":40.3,"years":{"22-23":{"apps":4,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":10,"admitted":5,"matric":1}}},{"school":"Cleveland State University College of Law","display_name":"Cleveland State University","pitt_apps":16,"pitt_admitted":9,"pitt_matric":3,"pitt_rate":56.2,"nat_rate":35.4,"years":{"22-23":{"apps":4,"admitted":2,"matric":1},"23-24":{"apps":7,"admitted":4,"matric":1},"24-25":{"apps":5,"admitted":3,"matric":1}}},{"school":"Florida State University College Of Law","display_name":"Florida State","pitt_apps":15,"pitt_admitted":5,"pitt_matric":0,"pitt_rate":33.3,"nat_rate":19.1,"years":{"22-23":{"apps":3,"admitted":1,"matric":0},"23-24":{"apps":7,"admitted":4,"matric":0},"24-25":{"apps":5,"admitted":0,"matric":0}}},{"school":"Stetson University College of Law","display_name":"Stetson University","pitt_apps":14,"pitt_admitted":4,"pitt_matric":3,"pitt_rate":28.6,"nat_rate":38.5,"years":{"22-23":{"apps":5,"admitted":3,"matric":2},"23-24":{"apps":5,"admitted":0,"matric":0},"24-25":{"apps":4,"admitted":1,"matric":1}}},{"school":"University of Illinois College of Law","display_name":"Illinois","pitt_apps":13,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":23.1,"nat_rate":40.2,"years":{"22-23":{"apps":5,"admitted":1,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":7,"admitted":2,"matric":0}}},{"school":"Marquette University Law School","display_name":"Marquette","pitt_apps":13,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":7.7,"nat_rate":29.8,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":0,"matric":0},"24-25":{"apps":8,"admitted":0,"matric":0}}},{"school":"University of Dayton School of Law","display_name":"Dayton","pitt_apps":13,"pitt_admitted":4,"pitt_matric":1,"pitt_rate":30.8,"nat_rate":33.7,"years":{"22-23":{"apps":2,"admitted":1,"matric":1},"23-24":{"apps":5,"admitted":2,"matric":0},"24-25":{"apps":6,"admitted":1,"matric":0}}},{"school":"Loyola Law School, Loyola Marymount University","display_name":"Loyola Marymount (LA)","pitt_apps":12,"pitt_admitted":3,"pitt_matric":1,"pitt_rate":25.0,"nat_rate":29.8,"years":{"22-23":{"apps":5,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":2,"matric":1},"24-25":{"apps":4,"admitted":0,"matric":0}}},{"school":"Texas Southern University--Thurgood Marshall School of Law","display_name":"Texas Southern University--Thurgood Marshall","pitt_apps":12,"pitt_admitted":5,"pitt_matric":2,"pitt_rate":41.7,"nat_rate":36.0,"years":{"22-23":{"apps":3,"admitted":1,"matric":1},"23-24":{"apps":2,"admitted":0,"matric":0},"24-25":{"apps":7,"admitted":4,"matric":1}}},{"school":"Hofstra University--Maurice A. Deane School of Law","display_name":"Hofstra","pitt_apps":12,"pitt_admitted":9,"pitt_matric":1,"pitt_rate":75.0,"nat_rate":46.9,"years":{"22-23":{"apps":5,"admitted":4,"matric":1},"23-24":{"apps":7,"admitted":5,"matric":0},"24-25":null}},{"school":"Vermont Law and Graduate School","display_name":"Vermont Law and Graduate School","pitt_apps":12,"pitt_admitted":9,"pitt_matric":2,"pitt_rate":75.0,"nat_rate":62.0,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":5,"admitted":5,"matric":1},"24-25":{"apps":5,"admitted":3,"matric":1}}},{"school":"University of Tennessee Winston College of Law","display_name":"Tennessee Winston","pitt_apps":12,"pitt_admitted":3,"pitt_matric":1,"pitt_rate":25.0,"nat_rate":26.8,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":6,"admitted":2,"matric":1},"24-25":{"apps":4,"admitted":0,"matric":0}}},{"school":"Elon University School of Law","display_name":"Elon University","pitt_apps":12,"pitt_admitted":6,"pitt_matric":2,"pitt_rate":50.0,"nat_rate":49.2,"years":{"22-23":{"apps":2,"admitted":1,"matric":1},"23-24":{"apps":4,"admitted":3,"matric":0},"24-25":{"apps":6,"admitted":2,"matric":1}}},{"school":"Florida International University College of Law","display_name":"Florida International University","pitt_apps":12,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":8.3,"nat_rate":21.3,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":6,"admitted":1,"matric":0},"24-25":{"apps":5,"admitted":0,"matric":0}}},{"school":"Seattle University School of Law","display_name":"Seattle","pitt_apps":11,"pitt_admitted":9,"pitt_matric":1,"pitt_rate":81.8,"nat_rate":47.0,"years":{"22-23":{"apps":4,"admitted":3,"matric":1},"23-24":{"apps":2,"admitted":2,"matric":0},"24-25":{"apps":5,"admitted":4,"matric":0}}},{"school":"University of Oregon School of Law","display_name":"Oregon","pitt_apps":11,"pitt_admitted":9,"pitt_matric":2,"pitt_rate":81.8,"nat_rate":64.3,"years":{"22-23":{"apps":3,"admitted":2,"matric":0},"23-24":{"apps":2,"admitted":2,"matric":1},"24-25":{"apps":6,"admitted":5,"matric":1}}},{"school":"University of Maine School of Law","display_name":"Maine","pitt_apps":11,"pitt_admitted":6,"pitt_matric":0,"pitt_rate":54.5,"nat_rate":51.0,"years":{"22-23":{"apps":4,"admitted":3,"matric":0},"23-24":{"apps":4,"admitted":2,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"University of the District of Columbia--David A. Clarke School of Law","display_name":"the District of Columbia--David A. Clarke","pitt_apps":11,"pitt_admitted":5,"pitt_matric":1,"pitt_rate":45.5,"nat_rate":39.1,"years":{"22-23":{"apps":3,"admitted":0,"matric":0},"23-24":{"apps":3,"admitted":1,"matric":1},"24-25":{"apps":5,"admitted":4,"matric":0}}},{"school":"University of California, Irvine School of Law","display_name":"UC Irvine","pitt_apps":10,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":20.0,"nat_rate":16.6,"years":{"22-23":{"apps":2,"admitted":0,"matric":0},"23-24":{"apps":5,"admitted":2,"matric":0},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"University of Cincinnati Donald P. Klekamp College of Law","display_name":"Cincinnati","pitt_apps":10,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":20.0,"nat_rate":39.7,"years":{"22-23":{"apps":3,"admitted":2,"matric":0},"23-24":{"apps":2,"admitted":0,"matric":0},"24-25":{"apps":5,"admitted":0,"matric":0}}},{"school":"Ave Maria School of Law","display_name":"Ave Maria","pitt_apps":10,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":40.0,"nat_rate":48.3,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":5,"admitted":3,"matric":0},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"North Carolina Central University School of Law","display_name":"North Carolina Central University","pitt_apps":10,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":10.0,"nat_rate":35.3,"years":{"22-23":{"apps":3,"admitted":0,"matric":0},"23-24":{"apps":3,"admitted":0,"matric":0},"24-25":{"apps":4,"admitted":1,"matric":0}}},{"school":"Ohio Northern University--Claude W. Pettit College of Law","display_name":"Ohio Northern University--Claude W. Pettit","pitt_apps":10,"pitt_admitted":4,"pitt_matric":1,"pitt_rate":40.0,"nat_rate":29.5,"years":{"22-23":null,"23-24":{"apps":7,"admitted":3,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":1}}},{"school":"Roger Williams University School of Law","display_name":"Roger Williams University","pitt_apps":10,"pitt_admitted":9,"pitt_matric":1,"pitt_rate":90.0,"nat_rate":64.6,"years":{"22-23":null,"23-24":{"apps":7,"admitted":7,"matric":0},"24-25":{"apps":3,"admitted":2,"matric":1}}},{"school":"The University of Arizona James E. Rogers College of Law","display_name":"Arizona","pitt_apps":9,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":22.2,"nat_rate":29.2,"years":{"22-23":{"apps":2,"admitted":0,"matric":0},"23-24":{"apps":4,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"SMU Dedman School of Law","display_name":"SMU (Dedman)","pitt_apps":9,"pitt_admitted":2,"pitt_matric":1,"pitt_rate":22.2,"nat_rate":28.8,"years":{"22-23":{"apps":3,"admitted":0,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":1},"24-25":{"apps":4,"admitted":1,"matric":0}}},{"school":"The University of Alabama School of Law","display_name":"Alabama","pitt_apps":9,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":22.2,"nat_rate":26.2,"years":{"22-23":{"apps":4,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":0,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Georgia State University College of Law","display_name":"Georgia State University","pitt_apps":9,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":44.4,"nat_rate":32.4,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":{"apps":4,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"Campbell University, Norman Adrian Wiggins School of Law","display_name":"Campbell University, Norman Adrian Wiggins","pitt_apps":9,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":44.4,"nat_rate":41.5,"years":{"22-23":{"apps":2,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":{"apps":6,"admitted":3,"matric":0}}},{"school":"University of Utah S.J. Quinney College of Law","display_name":"Utah (Quinney)","pitt_apps":8,"pitt_admitted":2,"pitt_matric":1,"pitt_rate":25.0,"nat_rate":26.4,"years":{"22-23":{"apps":4,"admitted":2,"matric":1},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"Nova Southeastern University--Shepard Broad College of Law","display_name":"Nova Southeastern University--Shepard Broad","pitt_apps":8,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":25.0,"nat_rate":52.8,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":1,"matric":0},"24-25":{"apps":4,"admitted":0,"matric":0}}},{"school":"Barry University Dwayne O. Andreas School of Law","display_name":"Barry University Dwayne O. Andreas","pitt_apps":8,"pitt_admitted":7,"pitt_matric":2,"pitt_rate":87.5,"nat_rate":57.2,"years":{"22-23":null,"23-24":{"apps":7,"admitted":6,"matric":2},"24-25":{"apps":1,"admitted":1,"matric":0}}},{"school":"South Texas College of Law Houston","display_name":"South Texas Houston","pitt_apps":7,"pitt_admitted":1,"pitt_matric":1,"pitt_rate":14.3,"nat_rate":38.3,"years":{"22-23":{"apps":3,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":1,"matric":1},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"University of Hawai'i at Manoa | William S. Richardson School of Law","display_name":"Hawai'i at Manoa | William S. Richardson","pitt_apps":7,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":28.6,"nat_rate":28.6,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":4,"admitted":1,"matric":0},"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"St. Thomas University College of Law","display_name":"St. Thomas University","pitt_apps":7,"pitt_admitted":3,"pitt_matric":2,"pitt_rate":42.9,"nat_rate":57.8,"years":{"22-23":null,"23-24":{"apps":4,"admitted":3,"matric":2},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"Mitchell Hamline School of Law","display_name":"Mitchell Hamline","pitt_apps":7,"pitt_admitted":4,"pitt_matric":1,"pitt_rate":57.1,"nat_rate":58.5,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":3,"admitted":2,"matric":1},"24-25":{"apps":3,"admitted":2,"matric":0}}},{"school":"Loyola University New Orleans College of Law","display_name":"Loyola New Orleans","pitt_apps":7,"pitt_admitted":6,"pitt_matric":2,"pitt_rate":85.7,"nat_rate":57.2,"years":{"22-23":{"apps":1,"admitted":1,"matric":1},"23-24":{"apps":3,"admitted":2,"matric":0},"24-25":{"apps":3,"admitted":3,"matric":1}}},{"school":"Capital University Law School","display_name":"Capital University","pitt_apps":7,"pitt_admitted":4,"pitt_matric":2,"pitt_rate":57.1,"nat_rate":71.0,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":2,"matric":2},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Florida A&M University College of Law","display_name":"Florida A&M University","pitt_apps":6,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":36.5,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"St. Mary's University School of Law","display_name":"St. Mary's University","pitt_apps":6,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":31.0,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":2,"admitted":2,"matric":0},"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"Santa Clara University School of Law","display_name":"Santa Clara University","pitt_apps":6,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":66.7,"nat_rate":56.7,"years":{"22-23":null,"23-24":{"apps":2,"admitted":2,"matric":0},"24-25":{"apps":4,"admitted":2,"matric":0}}},{"school":"The University of Toledo College of Law","display_name":"Toledo","pitt_apps":6,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":66.7,"nat_rate":51.5,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":1,"matric":0},"24-25":{"apps":2,"admitted":2,"matric":0}}},{"school":"California Western School of Law","display_name":"California Western","pitt_apps":6,"pitt_admitted":4,"pitt_matric":2,"pitt_rate":66.7,"nat_rate":52.1,"years":{"22-23":{"apps":2,"admitted":1,"matric":1},"23-24":null,"24-25":{"apps":4,"admitted":3,"matric":1}}},{"school":"University of Montana--Alexander Blewett III School of Law","display_name":"Montana--Alexander Blewett III","pitt_apps":6,"pitt_admitted":5,"pitt_matric":2,"pitt_rate":83.3,"nat_rate":59.9,"years":{"22-23":{"apps":4,"admitted":4,"matric":2},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":null}},{"school":"Western New England University School of Law","display_name":"Western New England University","pitt_apps":6,"pitt_admitted":5,"pitt_matric":0,"pitt_rate":83.3,"nat_rate":57.3,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":3,"admitted":3,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"University of Detroit Mercy School of Law","display_name":"Detroit Mercy","pitt_apps":5,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":40.0,"nat_rate":46.6,"years":{"22-23":{"apps":4,"admitted":2,"matric":0},"23-24":null,"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"Cooley Law School","display_name":"Cooley","pitt_apps":5,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":80.0,"nat_rate":49.0,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":2,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"The University of Kansas School of Law","display_name":"Kansas","pitt_apps":5,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":40.0,"nat_rate":41.0,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":2,"admitted":0,"matric":0}}},{"school":"The University of Memphis--Cecil C. Humphreys School of Law","display_name":"Memphis--Cecil C. Humphreys","pitt_apps":5,"pitt_admitted":3,"pitt_matric":2,"pitt_rate":60.0,"nat_rate":42.8,"years":{"22-23":{"apps":2,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":1},"24-25":{"apps":1,"admitted":1,"matric":1}}},{"school":"Wayne State University Law School","display_name":"Wayne State University","pitt_apps":5,"pitt_admitted":3,"pitt_matric":1,"pitt_rate":60.0,"nat_rate":27.1,"years":{"22-23":{"apps":3,"admitted":2,"matric":1},"23-24":null,"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Chapman University Dale E. Fowler School of Law","display_name":"Chapman University Dale E. Fowler","pitt_apps":5,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":40.0,"nat_rate":25.6,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":2,"admitted":0,"matric":0}}},{"school":"Southern University Law Center","display_name":"Southern University","pitt_apps":5,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":60.0,"nat_rate":57.5,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":3,"admitted":3,"matric":0}}},{"school":"The University of Iowa College of Law","display_name":"Iowa","pitt_apps":5,"pitt_admitted":3,"pitt_matric":1,"pitt_rate":60.0,"nat_rate":50.0,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":3,"admitted":3,"matric":1},"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"Texas Tech University School of Law","display_name":"Texas Tech University","pitt_apps":5,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":31.7,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"Belmont University College of Law","display_name":"Belmont University","pitt_apps":5,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":39.5,"years":{"22-23":{"apps":2,"admitted":0,"matric":0},"23-24":null,"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"University of Nebraska College of Law","display_name":"Nebraska","pitt_apps":5,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":60.0,"nat_rate":53.8,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":null,"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"Atlanta's John Marshall Law School","display_name":"Atlanta's John Marshall","pitt_apps":5,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":60.0,"nat_rate":41.0,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":4,"admitted":2,"matric":0},"24-25":null}},{"school":"Indiana University Robert H. McKinney School of Law","display_name":"Indiana University Robert H. McKinney","pitt_apps":5,"pitt_admitted":4,"pitt_matric":1,"pitt_rate":80.0,"nat_rate":60.2,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":null,"24-25":{"apps":4,"admitted":3,"matric":1}}},{"school":"University of San Francisco School of Law","display_name":"San Francisco","pitt_apps":5,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":40.0,"nat_rate":50.4,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":null,"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"Creighton University School of Law","display_name":"Creighton University","pitt_apps":4,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":68.1,"years":{"22-23":{"apps":3,"admitted":2,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"University of St. Thomas School of Law--Minneapolis","display_name":"St. Thomas--Minneapolis","pitt_apps":4,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":63.6,"years":{"22-23":null,"23-24":null,"24-25":{"apps":4,"admitted":2,"matric":0}}},{"school":"Regent University School of Law","display_name":"Regent University","pitt_apps":4,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":43.2,"years":{"22-23":{"apps":2,"admitted":0,"matric":0},"23-24":null,"24-25":{"apps":2,"admitted":0,"matric":0}}},{"school":"Gonzaga University School of Law","display_name":"Gonzaga University","pitt_apps":4,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":75.0,"nat_rate":55.1,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":0},"24-25":{"apps":1,"admitted":1,"matric":0}}},{"school":"Willamette University College of Law","display_name":"Willamette University","pitt_apps":4,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":75.0,"nat_rate":65.5,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Louisiana State University, Paul M. Hebert Law Center","display_name":"Louisiana State University, Paul M. Hebert","pitt_apps":4,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":45.1,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":null,"24-25":{"apps":2,"admitted":0,"matric":0}}},{"school":"University of Kentucky J. David Rosenberg College of Law","display_name":"Kentucky J. David Rosenberg","pitt_apps":4,"pitt_admitted":2,"pitt_matric":1,"pitt_rate":50.0,"nat_rate":46.8,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":1,"matric":1},"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"McGeorge School of Law, University of the Pacific","display_name":"McGeorge, the Pacific","pitt_apps":4,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":75.0,"nat_rate":58.0,"years":{"22-23":null,"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":2,"matric":0}}},{"school":"Appalachian School of Law","display_name":"Appalachian","pitt_apps":4,"pitt_admitted":4,"pitt_matric":0,"pitt_rate":100.0,"nat_rate":53.4,"years":{"22-23":null,"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":3,"matric":0}}},{"school":"The University of New Mexico School of Law","display_name":"New Mexico","pitt_apps":4,"pitt_admitted":3,"pitt_matric":0,"pitt_rate":75.0,"nat_rate":48.0,"years":{"22-23":null,"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":{"apps":3,"admitted":2,"matric":0}}},{"school":"Lewis & Clark Law School","display_name":"Lewis & Clark","pitt_apps":4,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":61.5,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":3,"admitted":0,"matric":0}}},{"school":"Northern Illinois University College of Law","display_name":"Northern Illinois University","pitt_apps":3,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":66.7,"nat_rate":50.8,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"Drake University Law School","display_name":"Drake University","pitt_apps":3,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":33.3,"nat_rate":60.4,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"The University of Mississippi School of Law","display_name":"Mississippi","pitt_apps":3,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":33.3,"nat_rate":43.8,"years":{"22-23":{"apps":1,"admitted":1,"matric":0},"23-24":{"apps":2,"admitted":0,"matric":0},"24-25":null}},{"school":"Mercer University School of Law","display_name":"Mercer University","pitt_apps":3,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":33.3,"nat_rate":42.3,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Southwestern Law School","display_name":"Southwestern","pitt_apps":3,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":33.3,"nat_rate":40.6,"years":{"22-23":null,"23-24":null,"24-25":{"apps":3,"admitted":1,"matric":0}}},{"school":"University of Oklahoma College of Law","display_name":"Oklahoma","pitt_apps":3,"pitt_admitted":1,"pitt_matric":1,"pitt_rate":33.3,"nat_rate":39.0,"years":{"22-23":{"apps":2,"admitted":1,"matric":1},"23-24":null,"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"University of Wyoming College of Law","display_name":"Wyoming","pitt_apps":3,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":66.7,"nat_rate":50.1,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":2,"admitted":2,"matric":0},"24-25":null}},{"school":"Liberty University School of Law","display_name":"Liberty University","pitt_apps":3,"pitt_admitted":2,"pitt_matric":2,"pitt_rate":66.7,"nat_rate":58.2,"years":{"22-23":{"apps":1,"admitted":1,"matric":1},"23-24":null,"24-25":{"apps":2,"admitted":1,"matric":1}}},{"school":"Western State College of Law at Westcliff University","display_name":"Western State at Westcliff University","pitt_apps":2,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":45.7,"years":{"22-23":null,"23-24":null,"24-25":{"apps":2,"admitted":1,"matric":0}}},{"school":"Oklahoma City University School of Law","display_name":"Oklahoma City University","pitt_apps":2,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":57.3,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"University of Nevada, Las Vegas, William S. Boyd School of Law","display_name":"Nevada, Las Vegas, William S. Boyd","pitt_apps":2,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":34.6,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":1,"matric":0},"24-25":null}},{"school":"Lincoln Memorial University--John J. Duncan, Jr. School of Law","display_name":"Lincoln Memorial University--John J. Duncan, Jr.","pitt_apps":2,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":50.0,"nat_rate":52.9,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":null,"24-25":{"apps":1,"admitted":1,"matric":0}}},{"school":"University of Idaho College of Law","display_name":"Idaho","pitt_apps":2,"pitt_admitted":2,"pitt_matric":0,"pitt_rate":100.0,"nat_rate":69.5,"years":{"22-23":{"apps":2,"admitted":2,"matric":0},"23-24":null,"24-25":null}},{"school":"University of North Texas Dallas College of Law","display_name":"North Texas Dallas","pitt_apps":2,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":26.9,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"Saint Louis University School of Law","display_name":"Saint Louis University","pitt_apps":2,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":59.9,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"Golden Gate University School of Law","display_name":"Golden Gate University","pitt_apps":1,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":22.4,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":null,"24-25":null}},{"school":"The University of Tulsa College of Law","display_name":"Tulsa","pitt_apps":1,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":49.0,"years":{"22-23":{"apps":1,"admitted":0,"matric":0},"23-24":null,"24-25":null}},{"school":"Northern Kentucky University--Salmon P. Chase College of Law","display_name":"Northern Kentucky University--Salmon P. Chase","pitt_apps":1,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":65.3,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"University of Puerto Rico School of Law","display_name":"Puerto Rico","pitt_apps":1,"pitt_admitted":1,"pitt_matric":1,"pitt_rate":100.0,"nat_rate":54.3,"years":{"22-23":null,"23-24":{"apps":1,"admitted":1,"matric":1},"24-25":null}},{"school":"Southern Illinois University Simmons Law School","display_name":"Southern Illinois University Simmons","pitt_apps":1,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":61.0,"years":{"22-23":null,"23-24":{"apps":1,"admitted":0,"matric":0},"24-25":null}},{"school":"University of Louisville Brandeis School of Law","display_name":"Louisville Brandeis","pitt_apps":1,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":100.0,"nat_rate":61.7,"years":{"22-23":null,"23-24":null,"24-25":{"apps":1,"admitted":1,"matric":0}}},{"school":"Washburn University School of Law","display_name":"Washburn University","pitt_apps":1,"pitt_admitted":0,"pitt_matric":0,"pitt_rate":0.0,"nat_rate":60.2,"years":{"22-23":null,"23-24":null,"24-25":{"apps":1,"admitted":0,"matric":0}}},{"school":"Faulkner University, Thomas Goode Jones School of Law","display_name":"Faulkner University, Thomas Goode Jones","pitt_apps":1,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":100.0,"nat_rate":55.8,"years":{"22-23":null,"23-24":null,"24-25":{"apps":1,"admitted":1,"matric":0}}},{"school":"Touro University Jacob D. Fuchberg Law Center","display_name":"Touro University Jacob D. Fuchberg","pitt_apps":1,"pitt_admitted":1,"pitt_matric":0,"pitt_rate":100.0,"nat_rate":48.0,"years":{"22-23":null,"23-24":null,"24-25":{"apps":1,"admitted":1,"matric":0}}}];
+
+let ovSort = { col: 'apps', asc: false };
+let rtSort = { col: 'apps', asc: false };
+let rateFilter = 'all';
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+function pctBadge(rate) {
+  if (rate == null) return '—';
+  const cls = rate >= 40 ? 'high' : rate >= 20 ? 'med' : 'low';
+  return `<span class="pct-badge ${cls}">${rate.toFixed(1)}%</span>`;
+}
+
+function buildTooltip(d) {
+  const yrs = d.years || {};
+  const labels = ['22-23', '23-24', '24-25'];
+  const headers = ['Year', 'Apps', 'Admitted', 'Enrolled'];
+  let rows = `<div class="tip-grid">
+    <div class="th">${headers[0]}</div><div class="th">${headers[1]}</div><div class="th">${headers[2]}</div><div class="th">${headers[3]}</div>`;
+  labels.forEach(yr => {
+    const y = yrs[yr];
+    if (y) {
+      rows += `<div class="yr">${yr}</div><div class="val">${y.apps}</div><div class="val">${y.admitted}</div><div class="val">${y.matric}</div>`;
+    } else {
+      rows += `<div class="yr">${yr}</div><div class="na">—</div><div class="na">—</div><div class="na">—</div>`;
+    }
+  });
+  rows += `</div>`;
+  return `<div class="tooltip"><div class="tooltip-title">Year-by-Year Breakdown</div>${rows}</div>`;
+}
+
+function setIndicators(prefix, cols, sortState, defaultCol) {
+  cols.forEach(c => {
+    const el = document.getElementById(`ind-${prefix}-${c}`);
+    if (!el) return;
+    const active = c === sortState.col || (sortState.col === 'rank' && c === defaultCol);
+    el.textContent = active ? (sortState.asc ? '↑' : '↓') : '';
+    el.className = 'sort-ind' + (active ? ' on' : '');
+  });
+}
+
+function sortData(data, sortState, defaultCol) {
+  const col = sortState.col === 'rank' ? defaultCol : sortState.col;
+  return [...data].sort((a, b) => {
+    const val = d => {
+      if (col === 'name') return d.display_name;
+      if (col === 'apps') return d.pitt_apps;
+      if (col === 'admitted') return d.pitt_admitted;
+      if (col === 'matric') return d.pitt_matric;
+      if (col === 'pitt_rate') return d.pitt_rate;
+      if (col === 'nat_rate') return d.nat_rate;
+      if (col === 'diff') return d.pitt_rate - d.nat_rate;
+      return 0;
+    };
+    const av = val(a) ?? -Infinity;
+    const bv = val(b) ?? -Infinity;
+    if (col === 'name') return sortState.asc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return sortState.asc ? av - bv : bv - av;
+  });
+}
+
+// ── OVERVIEW ──
+function sortOverview(col) {
+  ovSort = { col, asc: ovSort.col === col ? !ovSort.asc : false };
+  renderOverview();
+}
+
+function renderOverview() {
+  const limit = parseInt(document.getElementById('limit-overview').value);
+  const q = document.getElementById('search-overview').value.toLowerCase();
+  let data = RAW.filter(d => d.display_name.toLowerCase().includes(q) || d.school.toLowerCase().includes(q));
+  data = sortData(data, ovSort, 'apps');
+  data = data.slice(0, limit);
+  setIndicators('ov', ['rank','name','apps','admitted','matric','pitt_rate'], ovSort, 'apps');
+
+  const totalApps   = RAW.reduce((s,d) => s + d.pitt_apps, 0);
+  const totalAdmit  = RAW.reduce((s,d) => s + d.pitt_admitted, 0);
+  const totalMatric = RAW.reduce((s,d) => s + d.pitt_matric, 0);
+  document.getElementById('stats-overview').innerHTML = `
+    <div class="stat-item"><div class="stat-label">Total Applications</div><div class="stat-value">${totalApps.toLocaleString()}</div><div class="stat-sub">across ${RAW.length} law schools</div></div>
+    <div class="stat-item"><div class="stat-label">Total Admitted</div><div class="stat-value">${totalAdmit.toLocaleString()}</div><div class="stat-sub">overall admit rate: ${(totalAdmit/totalApps*100).toFixed(1)}%</div></div>
+    <div class="stat-item"><div class="stat-label">Total Matriculated</div><div class="stat-value">${totalMatric.toLocaleString()}</div><div class="stat-sub">yield on offers: ${(totalMatric/totalAdmit*100).toFixed(1)}%</div></div>
+    <div class="stat-item"><div class="stat-label">Most Applied To</div><div class="stat-value sm">${RAW[0].display_name}</div><div class="stat-sub">${RAW[0].pitt_apps} applications</div></div>`;
+
+  const tbody = document.getElementById('tbody-overview');
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="6" class="no-results">No schools match your search.</td></tr>`; return; }
+  tbody.innerHTML = data.map((d, i) => `
+    <tr>
+      <td class="rank-num">${i+1}</td>
+      <td><div class="tip-wrap"><div class="school-name">${d.display_name}</div>${buildTooltip(d)}</div></td>
+      <td class="num-cell">${d.pitt_apps}</td>
+      <td class="num-cell">${d.pitt_admitted}</td>
+      <td class="num-cell">${d.pitt_matric}</td>
+      <td>${pctBadge(d.pitt_rate)}</td>
+    </tr>`).join('');
+}
+
+// ── RATES ──
+function setRateFilter(f) {
+  rateFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('chip-' + f).classList.add('active');
+  renderRates();
+}
+
+function sortRates(col) {
+  rtSort = { col, asc: rtSort.col === col ? !rtSort.asc : false };
+  renderRates();
+}
+
+function renderRates() {
+  const limit = parseInt(document.getElementById('limit-rates').value);
+  const q = document.getElementById('search-rates').value.toLowerCase();
+  let data = RAW.filter(d => d.nat_rate != null && d.pitt_apps >= 15 && d.pitt_admitted > 0);
+  data = data.filter(d => d.display_name.toLowerCase().includes(q) || d.school.toLowerCase().includes(q));
+  if (rateFilter === 'pos') data = data.filter(d => d.pitt_rate > d.nat_rate);
+  if (rateFilter === 'neg') data = data.filter(d => d.pitt_rate <= d.nat_rate);
+  data = sortData(data, rtSort, 'apps');
+  data = data.slice(0, limit);
+  setIndicators('rt', ['rank','name','apps','pitt_rate','nat_rate','diff'], rtSort, 'apps');
+
+  const allR = RAW.filter(d => d.nat_rate != null && d.pitt_apps >= 15 && d.pitt_admitted > 0);
+  const aboveAvg  = allR.filter(d => d.pitt_rate > d.nat_rate).length;
+  const bigPos    = [...allR].sort((a,b) => (b.pitt_rate-b.nat_rate) - (a.pitt_rate-a.nat_rate))[0];
+  const bigNeg    = [...allR].sort((a,b) => (a.pitt_rate-a.nat_rate) - (b.pitt_rate-b.nat_rate))[0];
+  const avgDiff   = allR.reduce((s,d) => s + (d.pitt_rate - d.nat_rate), 0) / allR.length;
+  document.getElementById('stats-rates').innerHTML = `
+    <div class="stat-item"><div class="stat-label">Schools Above Avg</div><div class="stat-value">${aboveAvg}</div><div class="stat-sub">of ${allR.length} schools compared</div></div>
+    <div class="stat-item"><div class="stat-label">Biggest Advantage</div><div class="stat-value sm" style="color:var(--positive)">${bigPos.display_name}</div><div class="stat-sub">+${(bigPos.pitt_rate-bigPos.nat_rate).toFixed(1)}% above national</div></div>
+    <div class="stat-item"><div class="stat-label">Biggest Gap Below</div><div class="stat-value sm" style="color:var(--negative)">${bigNeg.display_name}</div><div class="stat-sub">${(bigNeg.pitt_rate-bigNeg.nat_rate).toFixed(1)}% below national</div></div>
+    <div class="stat-item"><div class="stat-label">Avg Pitt Advantage</div><div class="stat-value">${avgDiff.toFixed(1)}%</div><div class="stat-sub">mean difference vs. national</div></div>`;
+
+  const tbody = document.getElementById('tbody-rates');
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="6" class="no-results">No schools match your filters.</td></tr>`; return; }
+  tbody.innerHTML = data.map((d, i) => {
+    const diff = d.pitt_rate - d.nat_rate;
+    const cls  = diff > 3 ? 'diff-pos' : diff < -3 ? 'diff-neg' : 'diff-neu';
+    const txt  = diff > 0 ? `+${diff.toFixed(1)}%` : `${diff.toFixed(1)}%`;
+    return `
+    <tr>
+      <td class="rank-num">${i+1}</td>
+      <td><div class="tip-wrap"><div class="school-name">${d.display_name}</div>${buildTooltip(d)}</div></td>
+      <td class="num-cell">${d.pitt_apps}</td>
+      <td style="font-family:'Roboto Mono',monospace;font-size:13px;font-weight:600;color:var(--pitt-blue)">${d.pitt_rate.toFixed(1)}%</td>
+      <td style="font-family:'Roboto Mono',monospace;font-size:13px;color:var(--muted)">${d.nat_rate.toFixed(1)}%</td>
+      <td><span class="diff-badge ${cls}">${txt}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+renderOverview();
+renderRates();
+</script>
+</body>
+</html>
